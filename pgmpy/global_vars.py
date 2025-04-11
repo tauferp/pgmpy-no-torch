@@ -1,7 +1,6 @@
 import logging
 
 import numpy as np
-import torch
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("pgmpy")
@@ -31,22 +30,7 @@ class Config:
             raise ValueError(
                 f"Current backend is numpy. Device can only be set for torch backend"
             )
-
-        if device is None:
-            if torch.cuda.is_available():
-                self.DEVICE = torch.device("cuda:0")
-            else:
-                self.DEVICE = torch.device("cpu")
-        else:
-            if not device.startswith(("cuda", "cpu")):
-                raise ValueError(
-                    f"device must be either 'cuda', 'cuda:x' or 'cpu'. Got: {device}"
-                )
-            elif device.startswith("cuda"):
-                if torch.cuda.is_available():
-                    self.DEVICE = torch.device(device)
-            else:
-                self.DEVICE = torch.device(device)
+        raise ValueError("torch is not supported here")
 
     def get_device(self):
         """

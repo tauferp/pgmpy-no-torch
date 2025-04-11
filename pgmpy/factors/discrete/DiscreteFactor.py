@@ -3,7 +3,6 @@ from itertools import product
 
 import numpy as np
 import pandas as pd
-import torch
 
 from pgmpy import config
 from pgmpy.extern import tabulate
@@ -87,9 +86,7 @@ class DiscreteFactor(BaseFactor, StateNameMixin):
         if config.BACKEND == "numpy":
             values = np.array(values, dtype=config.get_dtype())
         else:
-            values = (
-                torch.Tensor(values).type(config.get_dtype()).to(config.get_device())
-            )
+            raise ValueError("torch is not supported")
 
         if len(cardinality) != len(variables):
             raise ValueError(
@@ -276,10 +273,7 @@ class DiscreteFactor(BaseFactor, StateNameMixin):
         if config.get_backend() == "numpy":
             index = np.array(index)
         else:
-            if (len(index) == 1) and (isinstance(index[0], torch.Tensor)):
-                index = index[0][None]
-            else:
-                index = torch.tensor(index, dtype=torch.int, device=config.get_device())
+            raise ValueError("torch is not supported")
 
         max_possible_index = np.prod(self.cardinality) - 1
         if not all(i <= max_possible_index for i in index):

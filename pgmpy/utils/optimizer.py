@@ -3,12 +3,7 @@ from math import isclose
 from pgmpy.global_vars import logger
 
 
-try:  # pragma: no cover
-    import torch
-
-    optim = torch.optim
-except ImportError:  # pragma: no cover
-    optim = None
+optim = None
 
 
 def pinverse(t):
@@ -24,9 +19,7 @@ def pinverse(t):
     -------
     torch.tensor: Inverse of the matrix `t`.
     """
-    u, s, v = t.svd()
-    t_inv = v @ torch.diag(torch.where(s != 0, 1 / s, s)) @ u.t()
-    return t_inv
+    raise ValueError("torch is not supported")
 
 
 def optimize(

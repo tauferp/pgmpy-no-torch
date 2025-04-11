@@ -2,7 +2,6 @@
 from copy import deepcopy
 
 import numpy as np
-import torch
 
 from pgmpy import config
 
@@ -21,7 +20,7 @@ def copy(arr):
         elif isinstance(arr, (int, float)):
             return deepcopy(arr)
     else:
-        return torch.tensor(arr, dtype=config.get_dtype(), device=config.get_device())
+        raise ValueError("torch is not supported")
 
 
 def tobytes(arr):
@@ -38,36 +37,31 @@ def max(arr, axis=None):
     if isinstance(arr, np.ndarray):
         return np.max(arr, axis=axis)
     else:
-        return torch.amax(arr, dim=axis)
+        raise ValueError("torch is not supported")
 
 
 def einsum(*args):
     if config.get_backend() == "numpy":
         return np.einsum(*args)
     else:
-        return torch.einsum(*args)
+        raise ValueError("torch is not supported")
 
 
 def argmax(arr):
     if isinstance(arr, np.ndarray):
         return np.argmax(arr)
     else:
-        return torch.argmax(arr)
+        raise ValueError("torch is not supported")
 
 
 def stack(arr_iter):
     if config.get_backend() == "numpy":
         return np.stack(tuple(arr_iter))
     else:
-        return torch.stack(tuple(arr_iter))
+        raise ValueError("torch is not supported")
 
 
 def to_numpy(arr, decimals=None):
-    if isinstance(arr, torch.Tensor):
-        if arr.device.type.startswith("cuda"):
-            arr = arr.cpu().detach().numpy()
-        else:
-            arr = arr.numpy(force=True)
 
     if decimals is None:
         return np.array(arr)
@@ -87,14 +81,14 @@ def ones(n):
         return np.ones(n, dtype=config.get_dtype())
 
     else:
-        return torch.ones(n, dtype=config.get_dtype(), device=config.get_device())
+        raise ValueError("torch is not supported")
 
 
 def get_compute_backend():
     if config.get_backend() == "numpy":
         return np
     else:
-        return torch
+        raise ValueError("torch is not supported")
 
 
 def unique(arr, axis=0, return_counts=False, return_inverse=False):
@@ -103,23 +97,21 @@ def unique(arr, axis=0, return_counts=False, return_inverse=False):
             arr, axis=axis, return_counts=return_counts, return_inverse=return_inverse
         )
     else:
-        return torch.unique(
-            arr, return_inverse=return_inverse, return_counts=return_counts, dim=axis
-        )
+        raise ValueError("torch is not supported")
 
 
 def flip(arr, axis=0):
     if isinstance(arr, np.ndarray):
         return np.flip(arr, axis=axis)
     else:
-        return torch.flip(arr, dims=axis)
+        raise ValueError("torch is not supported")
 
 
 def transpose(arr, axis):
     if isinstance(arr, np.ndarray):
         return np.transpose(arr, axes=axis)
     else:
-        return torch.permute(arr, dims=axis)
+        raise ValueError("torch is not supported")
 
 
 def exp(arr):
@@ -133,15 +125,11 @@ def sum(arr):
     if isinstance(arr, np.ndarray):
         return np.sum(arr)
     else:
-        return torch.sum(arr)
+        raise ValueError("torch is not supported")
 
 
 def allclose(arr1, arr2, atol):
     if isinstance(arr1, np.ndarray) and isinstance(arr2, np.ndarray):
         return np.allclose(arr1, arr2, atol=atol)
     else:
-        return torch.allclose(
-            torch.tensor(arr1, dtype=config.get_dtype(), device=config.get_device()),
-            torch.tensor(arr2, dtype=config.get_dtype(), device=config.get_device()),
-            atol=atol,
-        )
+        raise ValueError("torch is not supported")

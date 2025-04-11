@@ -8,7 +8,6 @@ from warnings import warn
 
 import pandas as pd
 import numpy as np
-import torch
 
 from pgmpy import config
 from pgmpy.extern import tabulate
@@ -141,9 +140,7 @@ class TabularCPD(DiscreteFactor):
         if config.BACKEND == "numpy":
             values = np.array(values, dtype=config.get_dtype())
         else:
-            values = (
-                torch.Tensor(values).type(config.get_dtype()).to(config.get_device())
-            )
+            raise ValueError("torch is not supported")
 
         if values.ndim != 2:
             raise TypeError("Values must be a 2D list/array")
