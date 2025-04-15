@@ -62,7 +62,7 @@ source_suffix = ".rst"
 master_doc = "index"
 
 # General information about the project.
-project = "pgmpy"
+project = "pgmpy-no-torch"
 copyright = "2021, Ankur Ankan"
 author = "Ankur Ankan, Abinash Panda"
 
@@ -266,7 +266,7 @@ latex_documents = [
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [(master_doc, "pgmpy", "pgmpy Documentation", [author], 1)]
+man_pages = [(master_doc, "pgmpy-no-torch", "pgmpy Documentation", [author], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False

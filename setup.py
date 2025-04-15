@@ -115,7 +115,7 @@ def parse_description(fpath):
     return ""
 
 
-NAME = "pgmpy"
+NAME = "pgmpy-no-torch"
 VERSION = parse_version("pgmpy/__init__.py")  # must be global for git tags
 
 
@@ -129,7 +129,7 @@ if __name__ == "__main__":
         package_data={"": ["utils/example_models/*.bif.gz"]},
         author="Ankur Ankan",
         author_email="ankurankan@gmail.com",
-        url="https://github.com/pgmpy/pgmpy",
+        url="https://github.com/tauferp/pgmpy-no-torch",
         license="MIT",
         classifiers=[
             "Programming Language :: Python :: 3.7",
